@@ -3,14 +3,7 @@ package com.tonnie.ipl.xpto.tracking.telemetry.model;
 import java.util.Set;
 import java.util.UUID;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -36,7 +29,7 @@ public class TelemetryProfile implements IEntity<UUID> {
 	@Column(name = "name")
 	private String name;
 
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "telemetry_profile_sensors", 
 		joinColumns = @JoinColumn(name = "telemetry_profile_id"), 
 		inverseJoinColumns = @JoinColumn(name = "sensors_id"))
