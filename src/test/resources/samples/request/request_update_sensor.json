@@ -1,0 +1,7 @@
+{
+    "name": "Alface",
+    "sensor_type": "RPM",
+    "minValue": 0.0,
+    "maxValue": 12.0,
+    "unit": "rpms"
+}

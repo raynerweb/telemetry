@@ -1,0 +1,54 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+	<changeSet logicalFilePath="db/changelog/revision/xptotracking_ms_telemetry_dml_1_0_0.xml" author="William.Marinho" id="xptotracking_ms_telemetry_dml_0_1_0-REV-001_DATA">
+		<insert tableName="telemetry_profiles">
+			<column name="telemetry_profile_id" value="e8d6cede-e3dc-47c9-a61d-429f316c35cf" />
+			<column name="name" value="Profile Banana" />
+		</insert>
+		<insert tableName="telemetry_profiles">
+			<column name="telemetry_profile_id" value="e8d6cede-e3dc-47c9-a61d-429f316c35ce" />
+			<column name="name" value="Profile Banana2" />
+		</insert>
+		<insert tableName="telemetry_profiles">
+			<column name="telemetry_profile_id" value="e8d6cede-e3dc-47c9-a61d-429f316c35cd" />
+			<column name="name" value="Profile Banana3" />
+		</insert>
+		<insert tableName="sensors">
+			<column name="sensors_id" value="f8d6cede-e3dc-47c9-a61d-429f316c35cf" />
+			<column name="name" value="RPM_1" />
+			<column name="type" value="RPM" />
+			<column name="min_value" value="0.0" />
+			<column name="max_value" value="10.0" />
+			<column name="unit" value="rpms" />
+		</insert>
+		<insert tableName="sensors">
+			<column name="sensors_id" value="f8d6cede-e3dc-47c9-a61d-429f316c35ce" />
+			<column name="name" value="RPM_2" />
+			<column name="type" value="RPM" />
+			<column name="min_value" value="0.0" />
+			<column name="max_value" value="10000.0" />
+			<column name="unit" value="rpms" />
+		</insert>
+		<insert tableName="sensors">
+			<column name="sensors_id" value="f8d6cede-e3dc-47c9-a61d-429f316c35cd" />
+			<column name="name" value="SPEED_1" />
+			<column name="type" value="SPEED" />
+			<column name="min_value" value="0.0" />
+			<column name="max_value" value="390.0" />
+			<column name="unit" value="km/h" />
+		</insert>
+		<insert tableName="telemetry_profile_sensors">
+			<column name="sensors_id" value="f8d6cede-e3dc-47c9-a61d-429f316c35cf" />
+			<column name="telemetry_profile_id" value="e8d6cede-e3dc-47c9-a61d-429f316c35cf" />
+		</insert>
+		<insert tableName="telemetry_profile_sensors">
+			<column name="sensors_id" value="f8d6cede-e3dc-47c9-a61d-429f316c35ce" />
+			<column name="telemetry_profile_id" value="e8d6cede-e3dc-47c9-a61d-429f316c35cf" />
+		</insert>
+	</changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,510 @@
+openapi: 3.0.3
+
+info:
+  title: IPL Tracking - Microservice API
+  description: API description for Tracking microservice.
+  version: 1.0.0
+
+tags:
+  - name: Telemetry
+    description: Telemetry definitions    
+
+servers:
+  - url: http://localhost:8080/tracking
+    description: Localhost - IPL Tracking DEV
+
+# ======= Endpoints =======
+
+paths:
+  /telemetryprofiles:
+    post:
+      tags:
+        - TelemetryProfile
+      summary: Create new TelemetryProfile
+      #security:
+      #  - basicAuth: [ ]
+      description: This operation is usedto create a new TelemetryProfile on System.
+      operationId: createTelemetryProfile
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTelemetryProfileRequest'
+        required: true
+      responses:
+        201:
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateTelemetryProfileResponse'
+        400:
+          description: Parameters missing in request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        409:
+          description: There is already a telemetryProfile registered with same name or mail
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        500:
+          description: Unexpected errors not mapped to status codes mentioned above
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+    get:
+      tags:
+        - TelemetryProfile
+      summary: Get TelemetryProfiles list
+      #security:
+      #  - basicAuth: [ ]
+      description: This operation is used to retrieve a list of TelemetryProfiles.
+      operationId: listTelemetryProfiles
+      responses:
+        200:
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListTelemetryProfilesResponse'
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        500:
+          description: Unexpected errors not mapped to status codes mentioned above
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /telemetryprofiles/{telemetryprofileId}:
+    put:
+      tags:
+        - TelemetryProfile
+      summary: Update TelemetryProfile's attributes
+      #security:
+      #  - basicAuth: [ ]
+      description: This operation is used to update some of the TelemetryProfile's attributes.
+      operationId: updateTelemetryProfile
+      parameters:
+        - name: telemetryprofileId
+          in: path
+          schema:
+            $ref: '#/components/schemas/UUID'
+          required: true
+          description: Unique identifier of the TelemetryProfile in the database
+          example: 0af401df-7d7a-1f36-817d-7b0a058d0003
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateTelemetryProfileRequest'
+        required: true
+      responses:
+        204:
+          description: No Content
+        400:
+          description: Parameters missing in request or request is malformed. For example, the mail is not in the correct format.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        404:
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        409:
+          description: There is already a TelemetryProfile registered with same name or email
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        500:
+          description: Unexpected errors not mapped to status codes mentioned above
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+    get:
+      tags:
+        - TelemetryProfile
+      summary: Get a single TelemetryProfile's info
+      #security:
+      #  - basicAuth: [ ]
+      description: This operation is used to retrieve the details of a specific device.
+      operationId: getTelemetryProfile
+      parameters:
+        - name: telemetryprofileId
+          in: path
+          schema:
+            $ref: '#/components/schemas/UUID'
+          required: true
+          description: Unique identifier of the TelemetryProfile in the database
+          example: 0af401df-7d7a-1f36-817d-7b0a058d0003
+      responses:
+        200:
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetTelemetryProfileResponse'
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        404:
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        500:
+          description: Unexpected errors not mapped to status codes mentioned above
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+    delete:
+      tags:
+        - TelemetryProfile
+      summary: Delete TelemetryProfile
+      #security:
+      #  - basicAuth: [ ]
+      description: This operation is delete a TelemetryProfile.
+      operationId: deleteTelemetryProfile
+      parameters:
+        - name: telemetryprofileId
+          in: path
+          schema:
+            $ref: '#/components/schemas/UUID'
+          required: true
+          description: Unique identifier of the TelemetryProfile in the database
+          example: 0af401df-7d7a-1f36-817d-7b0a058d0003
+      responses:
+        204:
+          description: No Content
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        404:
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        409:
+          description: Delete a telemetryprofile that has vehicles is not allowed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        500:
+          description: Unexpected errors not mapped to status codes mentioned above
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /telemetryprofiles/{telemetryprofileId}/sensor/{sensorId}:
+    put:
+      tags:
+        - TelemetryProfile
+      summary: Add a new sensor to informed TelemetryProfile
+      #security:
+      #  - basicAuth: [ ]
+      description: This operation is used to update some of the TelemetryProfile, including a new sensor.
+      operationId: addSensorToTelemetryProfile
+      parameters:
+        - name: telemetryprofileId
+          in: path
+          schema:
+            $ref: '#/components/schemas/UUID'
+          required: true
+          description: Unique identifier of the TelemetryProfile in the database
+          example: 0af401df-7d7a-1f36-817d-7b0a058d0003
+        - name: sensorId
+          in: path
+          schema:
+            $ref: '#/components/schemas/UUID'
+          required: true
+          description: Unique identifier of the Sensor in the database
+          example: 0af401df-7d7a-1f36-817d-7b0a058d0003
+      responses:
+        204:
+          description: No Content
+        400:
+          description: Parameters missing in request or request is malformed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        404:
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        409:
+          description: There sensor already exists on informed TelemetryProfile 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        500:
+          description: Unexpected errors not mapped to status codes mentioned above
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    
+    delete:
+      tags:
+        - TelemetryProfile
+      summary: remove a sensor from informed TelemetryProfile
+      #security:
+      #  - basicAuth: [ ]
+      description: This operation is used to update a TelemetryProfile, removing a sensor.
+      operationId: removeSensorFromTelemetryProfile
+      parameters:
+        - name: telemetryprofileId
+          in: path
+          schema:
+            $ref: '#/components/schemas/UUID'
+          required: true
+          description: Unique identifier of the TelemetryProfile in the database
+          example: 0af401df-7d7a-1f36-817d-7b0a058d0003
+        - name: sensorId
+          in: path
+          schema:
+            $ref: '#/components/schemas/UUID'
+          required: true
+          description: Unique identifier of the Sensor in the database
+          example: 0af401df-7d7a-1f36-817d-7b0a058d0003
+      responses:
+        204:
+          description: No Content
+        400:
+          description: Parameters missing in request or request is malformed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        404:
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        409:
+          description: There sensor not exists on informed TelemetryProfile 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        500:
+          description: Unexpected errors not mapped to status codes mentioned above
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    
+# ======= DTOs =======
+
+### general comment - each field needs to be described also, what it's for, what format is expected
+
+
+components:
+ 
+  schemas:
+  
+    EnumTelemetryProfileType:
+      description: type of TelemetryProfile
+      type: string
+      enum:
+        - RPM
+        - ODOMETER
+        - SPEED
+
+    GetTelemetryProfileResponse:
+      type: object
+      properties:
+        telemetryprofileId:
+          description: unique identifier of the TelemetryProfile in the database
+          $ref: '#/components/schemas/UUID'
+        name:
+          type: string
+          description: Complete TelemetryProfile name
+          example: Foo bar
+        sensors:
+          type: array
+          items:
+            $ref: 'sensor.yml#/components/schemas/GetSensorResponse'
+          description: Sensors associated
+      required: [ telemetryprofileId, name, sensors ]
+
+
+    CreateTelemetryProfileRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Complete TelemetryProfile name
+          example: Foo bar
+        sensors:
+          type: array
+          items:
+            $ref: '#/components/schemas/UUID'
+          description: unique identifier of the sensors in the database
+      required: [ telemetryprofileId, name ]
+
+    CreateTelemetryProfileResponse:
+      type: object
+      properties:
+        telemetryprofileId:
+          description: unique identifier of the TelemetryProfile in the database
+          $ref: '#/components/schemas/UUID'
+      required: [ telemetryprofileId ]
+
+    ListTelemetryProfilesResponse:
+      type: object
+      description: generic paged response
+      properties:
+        content:
+          type: array
+          description: list of paged items
+          items:
+            $ref: '#/components/schemas/GetTelemetryProfileResponse'
+        totalResults:
+          type: integer
+          format: int64
+          description: total number of records
+          example: 50
+      required: [ content, totalResults ]
+    
+    UpdateTelemetryProfileRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Complete TelemetryProfile name
+          example: Foo bar
+        sensors:
+          type: array
+          items:
+            $ref: '#/components/schemas/UUID'
+          description: unique identifier of the sensors in the database
+   
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Application error code
+          example: CST0001
+        type:
+          $ref: '#/components/schemas/ErrorTypeEnum'
+          description: Whether it is a technical or functional error
+        message:
+          type: string
+          description: Short error explanation
+          example: Unauthorized
+        details:
+          type: string
+          description: Short error detail
+          example: Parameter X has invalid value
+      required: [ errorCode, errorType, errorMessage ]
+
+    ErrorTypeEnum:
+      description: Error Type
+      type: string
+      enum:
+        - PERSISTENCE
+        - BUSINESS
+        - COMMUNICATION
+        - UNKNOWN
+    UUID:
+      type: string
+      pattern: '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$'
+      example: 0af401df-7d7a-1f36-817d-7b0a058d0003

@@ -1,0 +1,8 @@
+{
+    "sensorId": "f8d6cede-e3dc-47c9-a61d-429f316c35cd",
+    "name": "SPEED_1",
+    "sensor_type": "SPEED",
+    "minValue": 0.0,
+    "maxValue": 390.0,
+    "unit": "km/h"
+}
